@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Whatyouworth — Salary Predictor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+  <nav class="nav">
+    <div class="logo">
+      <span class="logo-n">W</span><span class="logo-text">hatyouworth</span>
+    </div>
+    <span class="nav-tag">Salary Predictor</span>
+  </nav>
+
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">Now streaming · compensation edition</p>
+      <h1>What's your worth?</h1>
+      <p class="subtitle">
+        Pick your profile below and get an instant salary estimate — powered by machine learning.
+      </p>
+      {% if not model_ready %}
+      <p class="banner banner--warn">
+        Model not trained yet. Run <code>python -m src.train</code> then refresh.
+      </p>
+      {% endif %}
+    </header>
+
+    <section class="card">
+      <h2 class="card-title">Your profile</h2>
+      <form method="post" class="form">
+        <div class="form-grid">
+          <div class="field">
+            <label for="years_experience">Years of experience</label>
+            <input
+              type="number"
+              id="years_experience"
+              name="years_experience"
+              min="0"
+              max="40"
+              step="0.5"
+              value="{{ form.years_experience }}"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label for="employment_type">Employment type</label>
+            <select id="employment_type" name="employment_type" required>
+              {% for option in employment_types %}
+              <option value="{{ option }}" {% if form.employment_type == option %}selected{% endif %}>
+                {{ option }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="field field--wide">
+            <label for="education">Education</label>
+            <select id="education" name="education" required>
+              {% for option in educations %}
+              <option value="{{ option }}" {% if form.education == option %}selected{% endif %}>
+                {{ option }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="field field--wide">
+            <label for="job_role">Job role</label>
+            <select id="job_role" name="job_role" required>
+              {% for option in job_roles %}
+              <option value="{{ option }}" {% if form.job_role == option %}selected{% endif %}>
+                {{ option }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="field field--wide">
+            <label for="industry">Industry</label>
+            <select id="industry" name="industry" required>
+              {% for option in industries %}
+              <option value="{{ option }}" {% if form.industry == option %}selected{% endif %}>
+                {{ option }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="field field--wide">
+            <label for="company_size">Company size</label>
+            <select id="company_size" name="company_size" required>
+              {% for option in company_sizes %}
+              <option value="{{ option }}" {% if form.company_size == option %}selected{% endif %}>
+                {{ option }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="field field--wide">
+            <label for="city_tier">Location / city tier</label>
+            <select id="city_tier" name="city_tier" required>
+              {% for option in city_tiers %}
+              <option value="{{ option }}" {% if form.city_tier == option %}selected{% endif %}>
+                {{ option }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="field field--wide">
+            <label for="remote_ratio">Remote work</label>
+            <input
+              type="range"
+              id="remote_ratio"
+              name="remote_ratio"
+              min="0"
+              max="100"
+              value="{{ form.remote_ratio }}"
+              oninput="document.getElementById('remote_label').textContent = this.value + '%'"
+            />
+            <span id="remote_label" class="range-value">{{ form.remote_ratio }}%</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn" {% if not model_ready %}disabled{% endif %}>
+          ▶ Predict salary
+        </button>
+      </form>
+
+      {% if error %}
+      <p class="result result--error">{{ error }}</p>
+      {% elif prediction is not none %}
+      <div class="result result--success">
+        <p class="result-label">Your predicted annual salary</p>
+        <p class="result-value">${{ "{:,.2f}".format(prediction) }}</p>
+        <p class="result-note">USD per year · based on your selections</p>
+      </div>
+      {% endif %}
+    </section>
+
+    <footer class="footer">
+      <p>Gradient Boosting · synthetic training data · SalaryFlix demo</p>
+    </footer>
+  </main>
+</body>
+</html>

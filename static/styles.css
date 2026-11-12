@@ -1,0 +1,326 @@
+:root {
+  --netflix-black: #000000;
+  --netflix-bg: #141414;
+  --netflix-surface: #181818;
+  --netflix-card: #222222;
+  --netflix-border: #333333;
+  --netflix-red: #e50914;
+  --netflix-red-hover: #f40612;
+  --netflix-red-dark: #b20710;
+  --netflix-text: #ffffff;
+  --netflix-muted: #b3b3b3;
+  --netflix-dim: #808080;
+  --warn: #f5c518;
+  --error: #e87c03;
+  --radius: 4px;
+  --font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: "Bebas Neue", "Helvetica Neue", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font);
+  background-color: var(--netflix-black);
+  color: var(--netflix-text);
+  line-height: 1.5;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, var(--netflix-black) 40%),
+    linear-gradient(90deg, rgba(229, 9, 20, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse 120% 80% at 80% -10%, rgba(229, 9, 20, 0.25) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 50% at 10% 100%, rgba(30, 30, 30, 0.9) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 4%;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 70%, transparent 100%);
+}
+
+.logo {
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.logo-n {
+  color: var(--netflix-red);
+  font-size: 2.4rem;
+}
+
+.logo-text {
+  color: var(--netflix-red);
+}
+
+.nav-tag {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--netflix-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 4% 3rem;
+}
+
+.hero {
+  margin-bottom: 1.5rem;
+  padding-top: 0.5rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--netflix-red);
+}
+
+h1 {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  text-shadow: 2px 4px 12px rgba(0, 0, 0, 0.8);
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--netflix-muted);
+  font-size: 1.05rem;
+  max-width: 36ch;
+}
+
+.banner {
+  margin: 1.25rem 0 0;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  border-left: 4px solid var(--warn);
+}
+
+.banner--warn {
+  background: rgba(245, 197, 24, 0.1);
+  color: #f5d76e;
+}
+
+.banner code {
+  font-size: 0.8rem;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0.15rem 0.4rem;
+  border-radius: 2px;
+  color: var(--netflix-text);
+}
+
+.card {
+  background: var(--netflix-card);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+.card-title {
+  margin: 0 0 1.25rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--netflix-text);
+  border-bottom: 1px solid var(--netflix-border);
+  padding-bottom: 0.75rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.25rem;
+}
+
+.field--wide {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--netflix-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.field input[type="number"],
+.field select {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  font-weight: 500;
+  color: var(--netflix-text);
+  background: var(--netflix-surface);
+  border: 1px solid var(--netflix-border);
+  border-radius: var(--radius);
+  appearance: none;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23b3b3b3' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  padding-right: 2rem;
+}
+
+.field input[type="number"]:hover,
+.field select:hover {
+  border-color: var(--netflix-dim);
+}
+
+.field input[type="number"]:focus,
+.field select:focus,
+.field input[type="range"]:focus {
+  outline: none;
+  border-color: var(--netflix-red);
+  box-shadow: 0 0 0 1px var(--netflix-red);
+}
+
+.field input[type="range"] {
+  width: 100%;
+  height: 4px;
+  accent-color: var(--netflix-red);
+  background: var(--netflix-border);
+  border-radius: 2px;
+}
+
+.range-value {
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--netflix-red);
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 0.85rem 1.5rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-family: inherit;
+  letter-spacing: 0.02em;
+  color: #fff;
+  background: var(--netflix-red);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--netflix-red-hover);
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.98);
+  background: var(--netflix-red-dark);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.result {
+  margin: 1.5rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--netflix-border);
+  text-align: center;
+}
+
+.result--error {
+  color: var(--error);
+  font-size: 0.9rem;
+}
+
+.result--success .result-label {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--netflix-muted);
+}
+
+.result-value {
+  margin: 0.35rem 0 0;
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  font-weight: 400;
+  color: var(--netflix-red);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-shadow: 0 2px 8px rgba(229, 9, 20, 0.4);
+}
+
+.result-note {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  color: var(--netflix-dim);
+}
+
+.footer {
+  margin-top: 2.5rem;
+  text-align: center;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--netflix-dim);
+}
+
+@media (max-width: 520px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 2.4rem;
+  }
+
+  .nav-tag {
+    display: none;
+  }
+}
